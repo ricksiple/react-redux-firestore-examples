@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import {
-  devToolsEnhancer,
-  composeWithDevTools
-} from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 import thunk from "redux-thunk";
-import { reducer as asyncReducer } from "../thunk/reducer";
+
+import asyncReducer from "./asyncReducer";
+import profilesReducer from "./profilesReducer";
 
 const rootReducer = combineReducers({
-  async: asyncReducer
+  async: asyncReducer,
+  profiles: profilesReducer
 });
 
 export const configureStore = () => {

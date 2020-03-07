@@ -2,13 +2,13 @@ const initialState = {
     loading: false
 }
 
-const actions = {
+const types = {
   ASYNC_ACTION_START: "ASYNC_ACTION_START",
   ASYNC_ACTION_FINISH: "ASYNC_ACTION_FINISH",
   ASYNC_ACTION_ERROR: "ASYNC_ACTION_ERROR"
 };
 
-export const creators = {
+export const actions = {
     asyncActionStart: () => ( {type: actions.ASYNC_ACTION_START} ),
     asyncActionFinish: () => ( { type: actions.ASYNC_ACTION_FINISH} ),
     asyncActionError: () => ( { type: actions.ASYNC_ACTION_ERROR} )
@@ -20,15 +20,17 @@ const handlers = {
     asyncActionError: (state) => ( {...state, loading: false} )
 }
 
-const reducder = (state, action) {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actions.ASYNC_ACTION_START:
+        case types.ASYNC_ACTION_START:
             return handlers.asyncActionStarted(state)
-        case actions.ASYNC_ACTION_FINISH:
+        case types.ASYNC_ACTION_FINISH:
             return handlers.asyncActionFinished(state)
-        case actions.ASYNC_ACTION_ERROR:
+        case types.ASYNC_ACTION_ERROR:
             return handlers.asyncActionError(state)
         default:
             return state
     }
 }
+
+export default reducer;
