@@ -1,5 +1,5 @@
 const initialState = {
-    loading: false
+    loading: 0
 }
 
 const types = {
@@ -15,9 +15,9 @@ export const actions = {
 }
 
 const handlers = {
-    asyncActionStarted: (state) => ( {...state, loading: true} ),
-    asyncActionFinished: (state) => ( {...state, loading: false} ),
-    asyncActionError: (state) => ( {...state, loading: false} )
+    asyncActionStarted: (state) => ( {...state, loading: state.loading + 1} ),
+    asyncActionFinished: (state) => ( {...state, loading: state.loading - 1} ),
+    asyncActionError: (state) => ( {...state, loading: state.loading - 1} )
 }
 
 const reducer = (state = initialState, action) => {

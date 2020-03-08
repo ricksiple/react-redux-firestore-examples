@@ -10,35 +10,22 @@ const actions = {
 };
 
 const MapStateToProps = (state, ownProps) => {
-  const p = state.profiles.profiles.find(profile => (profile.id === ownProps.profileId));
+  const p = state.profiles.profiles.find(
+    profile => profile.id === ownProps.profileId
+  );
   return {
     profile: p
   };
 };
 
 class ProfileItem extends Component {
-  constructor() {
-    super();
-    this.state = {
-      profile: {
-        id: "?",
-        lastName: "?",
-        firstName: "?",
-        rank: "?",
-        imageUrl: "?"
-      }
-    };
-  }
 
   componentDidMount() {
-    console.log("componentDidMount");
     this.props.getProfileAsync(this.props.profileId);
   }
 
   render() {
-    console.log("render")
-    const { profileId, getProfileAsync } = this.props;
-    const { profile } = this.state;
+    const { profile } = this.props;
     return (
       <List.Item>
         <Card>

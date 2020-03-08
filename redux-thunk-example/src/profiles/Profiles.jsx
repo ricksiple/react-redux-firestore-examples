@@ -19,7 +19,7 @@ const Profiles = props => {
   const { profiles, getProfilesAsync, loading } = props;
   return (
     <Fragment>
-      <Button disabled={loading} loading={loading}
+      <Button disabled={(loading > 0)} loading={(loading > 0)}
         onClick={() => {
           getProfilesAsync();
         }}

@@ -44,20 +44,19 @@ export const actions = {
 
   getProfilesAsync: () => {
     return async dispatch => {
-      // dispatch(asyncActions.asyncActionStart());
-      // await delay(2000);
+      dispatch(asyncActions.asyncActionStart());
+      await delay(2000);
       dispatch(actions.getProfiles());
-      // dispatch(asyncActions.asyncActionFinish());
+      dispatch(asyncActions.asyncActionFinish());
     };
   },
 
   getProfileAsync: (id) => {
-    console.log(`getProfileAsync(${id})`);
     return async dispatch => {
-      // dispatch(asyncActions.asyncActionStart());
-      // await delay(Math.random() * 5000);
+      dispatch(asyncActions.asyncActionStart());
+      await delay(Math.random() * 5000);
       dispatch(actions.getProfile(id));
-      // dispatch(asyncActions.asyncActionFinish());
+      dispatch(asyncActions.asyncActionFinish());
     };
   }
 };
@@ -69,8 +68,8 @@ const handlers = {
   },
 
   getProfile: (state, action) => {
-    const newProfile = profiles.find(profile => (profile.id = action.id));
-    const newProfiles = profiles.map(profile =>
+    const newProfile = profiles.find(profile => (profile.id === action.id));
+    const newProfiles = state.profiles.map(profile =>
       profile.id === action.id ? newProfile : profile
     );
     return { ...state, profiles: newProfiles };
