@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { List, Button } from "semantic-ui-react";
-import { ProfileItem } from "./ProfileItem";
+import ProfileItem from "./ProfileItem";
 
 import { connect } from "react-redux";
 
@@ -11,22 +11,23 @@ const actions = {
 };
 
 const MapStateToProps = state => ({
-  profiles: state.profiles.profiles
+  profiles: state.profiles.profiles,
+  loading: state.async.loading
 });
 
 const Profiles = props => {
-  const { profiles, getProfilesAsync } = props;
+  const { profiles, getProfilesAsync, loading } = props;
   return (
     <Fragment>
-      <Button
+      <Button disabled={loading} loading={loading}
         onClick={() => {
           getProfilesAsync();
         }}
         content="Get Profiles"
       />
-      <List>
-        {profiles.map(profile => (
-          <ProfileItem profile={profile} />
+      <List horizontal>
+        {profiles && profiles.map(profile => (
+          <ProfileItem key={profile.id} profileId={profile.id} />
         ))}
       </List>
     </Fragment>

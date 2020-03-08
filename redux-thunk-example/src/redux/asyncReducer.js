@@ -9,9 +9,9 @@ const types = {
 };
 
 export const actions = {
-    asyncActionStart: () => ( {type: actions.ASYNC_ACTION_START} ),
-    asyncActionFinish: () => ( { type: actions.ASYNC_ACTION_FINISH} ),
-    asyncActionError: () => ( { type: actions.ASYNC_ACTION_ERROR} )
+    asyncActionStart: () => ( {type: types.ASYNC_ACTION_START} ),
+    asyncActionFinish: () => ( { type: types.ASYNC_ACTION_FINISH} ),
+    asyncActionError: () => ( { type: types.ASYNC_ACTION_ERROR} )
 }
 
 const handlers = {

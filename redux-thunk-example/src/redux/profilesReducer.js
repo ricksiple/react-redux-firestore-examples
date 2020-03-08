@@ -1,6 +1,10 @@
+import { actions as asyncActions } from "./asyncReducer";
+
 const initialState = {
   profiles: []
 };
+
+const profileIds = [{ id: "picard001" }, { id: "riker001" }, { id: "data001" }];
 
 const profiles = [
   {
@@ -26,34 +30,50 @@ const profiles = [
   }
 ];
 
-const delay = (ms) => ( new Promise((resolve, reject) => setTimeout(ms, resolve))  );
+const delay = ms => new Promise((resolve, reject) => setTimeout(resolve, ms));
 
 const types = {
   GET_PROFILES: "GET_PROFILES",
-  GET_PROFILE: "GET_PROFILE",
-  GET_PROFILES_ASYNC: "GET_PROFILES_ASYNC"
+  GET_PROFILE: "GET_PROFILE"
 };
 
 export const actions = {
   getProfiles: () => ({ type: types.GET_PROFILES }),
+
   getProfile: id => ({ type: types.GET_PROFILE, id: id }),
-  getProfilesAsync: () => ({ type: types.GET_PROFILES_ASYNC })
+
+  getProfilesAsync: () => {
+    return async dispatch => {
+      // dispatch(asyncActions.asyncActionStart());
+      // await delay(2000);
+      dispatch(actions.getProfiles());
+      // dispatch(asyncActions.asyncActionFinish());
+    };
+  },
+
+  getProfileAsync: (id) => {
+    console.log(`getProfileAsync(${id})`);
+    return async dispatch => {
+      // dispatch(asyncActions.asyncActionStart());
+      // await delay(Math.random() * 5000);
+      dispatch(actions.getProfile(id));
+      // dispatch(asyncActions.asyncActionFinish());
+    };
+  }
 };
 
 const handlers = {
   getProfiles: (state, action) => {
-    console.log(state);
-    const newState = { ...state, profiles: [...profiles] };
-    console.log(newState);
+    const newState = { ...state, profiles: [...profileIds] };
     return newState;
   },
-  getProfile: (state, action) => ({ ...state }),
-  getProfilesAsync: (state, action) => {
-    console.log("getProfilesAsync")
-    return async (dispatch) => {
-      // await dispatch(delay(2000));
-      dispatch({type:types.GET_PROFILES});
-    }
+
+  getProfile: (state, action) => {
+    const newProfile = profiles.find(profile => (profile.id = action.id));
+    const newProfiles = profiles.map(profile =>
+      profile.id === action.id ? newProfile : profile
+    );
+    return { ...state, profiles: newProfiles };
   }
 };
 
@@ -63,9 +83,7 @@ const reducer = (state = initialState, action) => {
       return handlers.getProfiles(state, action);
     case types.GET_PROFILE:
       return handlers.getProfile(state, action);
-      case types.GET_PROFILEs_ASYNC:
-        return handlers.getProfilesAsync(state, action);
-      default:
+    default:
       return state;
   }
 };
