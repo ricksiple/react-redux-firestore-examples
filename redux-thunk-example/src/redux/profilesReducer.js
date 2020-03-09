@@ -25,7 +25,7 @@ const profiles = [
     id: "data001",
     rank: "Lt. Cmdr.",
     firstName: "",
-    lastName: "data",
+    lastName: "Data",
     imageUrl: "data.jpg"
   }
 ];

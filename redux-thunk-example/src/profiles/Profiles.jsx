@@ -19,16 +19,21 @@ const Profiles = props => {
   const { profiles, getProfilesAsync, loading } = props;
   return (
     <Fragment>
-      <Button disabled={(loading > 0)} loading={(loading > 0)}
-        onClick={() => {
-          getProfilesAsync();
-        }}
-        content="Get Profiles"
-      />
+      <div>
+        <Button
+          disabled={loading > 0}
+          loading={loading > 0}
+          onClick={() => {
+            getProfilesAsync();
+          }}
+          content="Get Profiles"
+        />
+      </div>
       <List horizontal>
-        {profiles && profiles.map(profile => (
-          <ProfileItem key={profile.id} profileId={profile.id} />
-        ))}
+        {profiles &&
+          profiles.map(profile => (
+            <ProfileItem key={profile.id} profileId={profile.id} />
+          ))}
       </List>
     </Fragment>
   );
