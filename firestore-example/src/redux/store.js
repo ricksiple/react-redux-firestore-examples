@@ -1,15 +1,48 @@
-import { createStore, combineReducers } from "redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
+// redux
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+// redux-thunk
+import thunk from "redux-thunk";
+
+// react-redux-firebase
+import {
+  reactReduxFirebase,
+  getFirebase,
+  firebaseReducer,
+} from "react-redux-firebase";
+import {
+  reduxFirestore,
+  getFirestore,
+  firestoreReducer,
+} from "redux-firestore";
+
+// firebase configuration
+import firebase from "../config/firebase";
 
 // custom reducers
-// import { reducer1 } from "module1";
-// import { reducer2 } from "module2";
+import fossilReducer from "./fossil";
+
+const rrfConfig = {
+  userProfile: "users",
+  attachAuthIsReady: true,
+  useFirestoreForProfile: true,
+};
 
 const rootReducer = combineReducers({
-  //label1: reducer1,
-  //label2: reduder2
+  fossil: fossilReducer,
+  firebase: firebaseReducer,
+  firestore: firestoreReducer,
 });
 
-export const getStore = () => {
-  return createStore(root, devToolsEnhancer());
+const getStore = () => {
+  const middlewares = [thunk.withExtraArgument({ getFirebase, getFirestore })];
+  const composedEnhancer = composeWithDevTools(
+    applyMiddleware(...middlewares),
+    reactReduxFirebase(firebase, rrfConfig),
+    reduxFirestore(firebase)
+  );
+  return createStore(rootReducer, composedEnhancer);
 };
+
+export default getStore;
