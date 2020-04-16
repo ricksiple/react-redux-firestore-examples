@@ -20,9 +20,6 @@ import {
 // firebase configuration
 import firebase from "../config/firebase";
 
-// custom reducers
-import fossilReducer from "./fossil";
-
 const rrfConfig = {
   userProfile: "users",
   attachAuthIsReady: true,
@@ -30,7 +27,6 @@ const rrfConfig = {
 };
 
 const rootReducer = combineReducers({
-  fossil: fossilReducer,
   firebase: firebaseReducer,
   firestore: firestoreReducer,
 });
