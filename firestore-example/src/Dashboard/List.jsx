@@ -7,7 +7,7 @@ class List extends Component {
     const { records } = this.props;
     return (
       <Fragment>
-        {records && records.map((r) => <ListItem record={r} />)}
+        {records && records.map((r) => <ListItem key={r.id} record={r} />)}
       </Fragment>
     );
   }
