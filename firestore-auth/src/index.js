@@ -7,13 +7,17 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { getStore } from "./redux/store";
 
+import { BrowserRouter } from "react-router-dom";
+
 const rootEl = document.getElementById("root");
 
 let render = () => {
     ReactDOM.render(
-        <Provider store={getStore()}>
-            <App />
-        </Provider>,
+        <BrowserRouter>
+            <Provider store={getStore()}>
+                <App />
+            </Provider>
+        </BrowserRouter>,
         rootEl
     );
 };
