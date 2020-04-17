@@ -30,7 +30,6 @@ const types = {
 
 const handlers = {
     delete: (state, action) => {
-        console.log(`fossil.handlers.delete(${action})`);
         const newRecords = state.records.filter(r => r.id !== action.id);
         return { ...state, records: newRecords, selected: null };
     }
@@ -38,13 +37,11 @@ const handlers = {
 
 export const actions = {
     delete: id => {
-        console.log(`fossil.actions.delete(${id})`);
         return { type: types.DELETE, id: id }
     }
 };
 
 export const reducer = (state = initialState, action) => {
-    console.log(`fossilReducer(${action.type})`);
     switch (action.type) {
         case types.DELETE:
             return handlers.delete(state, action);
