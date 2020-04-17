@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from "react";
 
 import FossilList from "./FossilList";
 
@@ -8,24 +8,25 @@ import { actions as fossilActions } from "../redux/fossil";
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        records: state.fossil.records
-    }
-}
+        records: state.fossil.records,
+    };
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        rdxDelete: fossilActions.delete
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    deleteFossil: (id) => {
+        dispatch(fossilActions.delete(id));
     }
-}
+});
+
 class FossilPane extends Component {
     render() {
-        const { records } = this.props;
+        const { records, deleteFossil } = this.props;
         return (
             <Fragment>
                 <h1>Fossils</h1>
-                <FossilList records={records} />
+                <FossilList records={records} deleteFossil={deleteFossil} />
             </Fragment>
-        )
+        );
     }
 }
 

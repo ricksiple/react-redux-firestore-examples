@@ -4,11 +4,11 @@ import FossilListItem from "./FossilListItem";
 
 class FossilList extends Component {
   render() {
-    const { records } = this.props;
+    const { records, deleteFossil } = this.props;
     return (
       <Fragment>
         {records.map((record) => (
-          <FossilListItem key={record.id} record={record} />
+          <FossilListItem key={record.id} record={record} deleteFossil={deleteFossil}/>
         ))}
       </Fragment>
     );
