@@ -8,7 +8,7 @@ export default class UserList extends Component {
         return (
             <Fragment>
                 { records.map((record) => (
-                    <UserListItem record={record} deleteUser={deleteUser} />
+                    <UserListItem key={record.id} record={record} deleteUser={deleteUser} />
                 ))}
             </Fragment>
         )
