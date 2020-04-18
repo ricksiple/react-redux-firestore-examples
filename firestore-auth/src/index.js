@@ -6,8 +6,27 @@ import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
 import { getStore } from "./redux/store";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { createFirestoreInstance } from "redux-firestore";
 
 import { BrowserRouter } from "react-router-dom";
+
+import firebase from "./config/firebase";
+
+const store = getStore();
+
+const rrfConfig = {
+    userProfile: "users",
+    attachAuthIsReady: true,
+    useFirestoreForProfile: true,
+};
+
+const rrfProps = {
+    firebase,
+    config: rrfConfig,
+    dispatch: store.dispatch,
+    createFirestoreInstance,
+};
 
 const rootEl = document.getElementById("root");
 
@@ -15,7 +34,9 @@ let render = () => {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={getStore()}>
-                <App />
+                <ReactReduxFirebaseProvider {...rrfProps}>
+                    <App />
+                </ReactReduxFirebaseProvider>
             </Provider>
         </BrowserRouter>,
         rootEl
