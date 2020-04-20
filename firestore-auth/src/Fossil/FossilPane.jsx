@@ -3,20 +3,15 @@ import React, { Component, Fragment } from "react";
 import FossilList from "./FossilList";
 
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
 
-import { actions as fossilActions } from "../redux/fossil";
+import { compose } from "redux";
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        records: state.fossil.records,
+        records: state.firestore.ordered.fossil,
     };
 };
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    deleteFossil: (id) => {
-        dispatch(fossilActions.delete(id));
-    }
-});
 
 class FossilPane extends Component {
     render() {
@@ -30,4 +25,9 @@ class FossilPane extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FossilPane);
+const enhance = compose(
+    firestoreConnect([{collection:'fossil'}]),
+    connect(mapStateToProps)
+);
+
+export default enhance(FossilPane);

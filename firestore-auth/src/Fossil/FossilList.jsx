@@ -7,7 +7,7 @@ class FossilList extends Component {
     const { records, deleteFossil } = this.props;
     return (
       <Fragment>
-        {records.map((record) => (
+        {records && records.map((record) => (
           <FossilListItem key={record.id} record={record} deleteFossil={deleteFossil}/>
         ))}
       </Fragment>

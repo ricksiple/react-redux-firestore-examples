@@ -18,14 +18,14 @@ const store = getStore();
 const rrfConfig = {
     userProfile: "users",
     attachAuthIsReady: true,
-    useFirestoreForProfile: true,
+    useFirestoreForProfile: true
 };
 
 const rrfProps = {
     firebase,
     config: rrfConfig,
     dispatch: store.dispatch,
-    createFirestoreInstance,
+    createFirestoreInstance
 };
 
 const rootEl = document.getElementById("root");
@@ -33,7 +33,7 @@ const rootEl = document.getElementById("root");
 let render = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <Provider store={getStore()}>
+            <Provider store={store}>
                 <ReactReduxFirebaseProvider {...rrfProps}>
                     <App />
                 </ReactReduxFirebaseProvider>

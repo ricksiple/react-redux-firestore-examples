@@ -7,7 +7,7 @@ export default class UserList extends Component {
         const { records, deleteUser } = this.props;
         return (
             <Fragment>
-                { records.map((record) => (
+                { records && records.map((record) => (
                     <UserListItem key={record.id} record={record} deleteUser={deleteUser} />
                 ))}
             </Fragment>

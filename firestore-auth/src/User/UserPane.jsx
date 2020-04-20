@@ -1,22 +1,14 @@
 import React, { Component, Fragment } from 'react'
 
+import { compose } from "redux";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 import UserList from "./UserList";
 
-import { actions as userActions } from "../redux/user";
-
 const mapStateToProps = (state, ownProps) => {
     return {
-        records: state.user.records
-    }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        deleteUser: (id) => {
-            dispatch(userActions.delete(id));
-        }
+        records: state.firestore.ordered.user
     }
 }
 
@@ -32,4 +24,9 @@ class UserPane extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPane);
+const enhance = compose(
+    firestoreConnect([{collection: "user"}]),
+    connect(mapStateToProps)
+)
+
+export default enhance(UserPane);
