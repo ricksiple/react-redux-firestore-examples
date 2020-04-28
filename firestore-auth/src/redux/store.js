@@ -5,9 +5,13 @@ import { devToolsEnhancer } from "redux-devtools-extension";
 import { firebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
 
+// redux form
+import { reducer as formReducer } from 'redux-form';
+
 const reducers = combineReducers({
     firebase: firebaseReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer,
+    form: formReducer
 });
 
 export const getStore = () => {
