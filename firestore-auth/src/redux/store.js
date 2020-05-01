@@ -8,10 +8,14 @@ import { firestoreReducer } from "redux-firestore";
 // redux form
 import { reducer as formReducer } from 'redux-form';
 
+// app
+import authReducer from '../redux/auth';
+
 const reducers = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
-    form: formReducer
+    form: formReducer,
+    auth: authReducer
 });
 
 export const getStore = () => {
