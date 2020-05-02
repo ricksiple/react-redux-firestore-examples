@@ -18,6 +18,10 @@ const reducers = combineReducers({
     auth: authReducer
 });
 
+const store = createStore(reducers, devToolsEnhancer());
+
 export const getStore = () => {
-    return createStore(reducers, devToolsEnhancer());
+    return store;
 };
+
+export const dispatch = store.dispatch;

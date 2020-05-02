@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 
-import { connect } from "react-redux";
-
 import firebase from "../config/firebase";
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-        auth: state.firebase.auth
-    }
-}
 
 const logout = (e) => {
     e.preventDefault();
@@ -17,10 +9,8 @@ const logout = (e) => {
 
 class SignOut extends Component {
     render() {
-        const { auth } = this.props;
         return (
             <div>
-                <p>Logged in as {auth.displayName ? auth.displayName : auth.email}</p>
                 <input
                     type="button"
                     value="Logout"
@@ -31,4 +21,4 @@ class SignOut extends Component {
     }
 }
 
-export default connect(mapStateToProps)(SignOut);
+export default SignOut;
