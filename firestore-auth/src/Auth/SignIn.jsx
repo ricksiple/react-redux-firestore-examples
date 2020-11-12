@@ -1,12 +1,20 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import firebase from "../config/firebase";
 
 import { compose } from "redux";
 
-import { Field, reduxForm } from "redux-form";
+import { reduxForm, Field } from "redux-form";
+import { TextInput } from "../Form/TextInput";
 
 import { connect } from "react-redux";
+
+import { combineValidators, isRequired } from "revalidate";
+
+const validate = combineValidators({
+    email: isRequired({ message: "Email is required." }),
+    password: isRequired({ message: "Password is required." }),
+});
 
 const login = (e, cred) => {
     e.preventDefault();
@@ -24,38 +32,44 @@ const mapStateToProps = (state, ownProps) => {
                 email: state.form.signIn.values.email,
                 password: state.form.signIn.values.password,
             },
-            isNotReady: false,
         };
     } else {
         return {
             cred: null,
-            isNotReady: true,
         };
     }
 };
 
 class SignIn extends Component {
     render() {
-        const { cred, isNotReady } = this.props;
+        const { cred, submitting, invalid } = this.props;
         return (
-            <div>
-                <label>Email: </label>
-                <Field name="email" component="input" type="text" />
-                <label>Password: </label>
-                <Field name="password" component="input" type="password" />
+            <Fragment>
+                <Field
+                    component={TextInput}
+                    name="email"
+                    type="text"
+                    label="Email: "
+                />
+                <Field
+                    component={TextInput}
+                    name="password"
+                    type="password"
+                    label="Password: "
+                />
                 <input
                     type="button"
                     value="Login"
                     onClick={(e) => login(e, cred)}
-                    disabled={isNotReady}
+                    disabled={invalid || submitting}
                 />
-            </div>
+            </Fragment>
         );
     }
 }
 
 const enhance = compose(
-    reduxForm({ form: "signIn" }),
+    reduxForm({ form: "signIn", validate }),
     connect(mapStateToProps)
 );
 export default enhance(SignIn);

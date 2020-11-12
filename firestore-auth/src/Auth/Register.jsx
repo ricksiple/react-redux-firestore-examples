@@ -5,8 +5,16 @@ import firebase from "../config/firebase";
 import { compose } from "redux";
 
 import { reduxForm, Field } from "redux-form";
+import { combineValidators, isRequired } from "revalidate";
+import { TextInput } from "../Form/TextInput";
 
 import { connect } from "react-redux";
+
+const validate = combineValidators({
+    email: isRequired({message: "Email is a required field."}),
+    password: isRequired({message: "Password is a required field."}),
+    displayName: isRequired({message: "Name is a required field."})
+});
 
 const mapStateToProps = (state, ownProps) => {
     if (state.form.register && state.form.register.values) {
@@ -15,13 +23,11 @@ const mapStateToProps = (state, ownProps) => {
                 email: state.form.register.values.email,
                 password: state.form.register.values.password,
                 displayName: state.form.register.values.displayName,
-            },
-            isNotReady: false,
+            }
         };
     } else {
         return {
-            cred: null,
-            isNotReady: true,
+            cred: null
         };
     }
 };
@@ -50,21 +56,21 @@ const register = (e, cred) => {
 
 class Register extends Component {
     render() {
-        const { cred, isNotReady } = this.props;
+        const { cred, invalid, submitting } = this.props;
         return (
             <Fragment>
                 {" "}
                 <label>Email: </label>
-                <Field name="email" component="input" type="text" />
+                <Field name="email" component={TextInput} type="text" />
                 <label>Password: </label>
-                <Field name="password" component="input" type="password" />
+                <Field name="password" component={TextInput} type="password" />
                 <label>Name: </label>
-                <Field name="displayName" component="input" type="text" />
+                <Field name="displayName" component={TextInput} type="text" />
                 <input
                     type="button"
                     value="Register"
                     onClick={(e) => register(e, cred)}
-                    disabled={isNotReady}
+                    disabled={invalid || submitting }
                 />
             </Fragment>
         );
@@ -72,7 +78,7 @@ class Register extends Component {
 }
 
 const enhance = compose(
-    reduxForm({ form: "register" }),
+    reduxForm({ form: "register", validate }),
     connect(mapStateToProps)
 );
 
